@@ -2,19 +2,34 @@
   // 1) What is the purpose of the 'this keyword'?
 
       //Answer
+    //The this reference ALWAYS refers to (and holds the value of) an
+    //object—a singular object—and it is usually used inside a function or a method,
+    //although it can be used outside a function in the global scope.
 
   // 2) What are the four rules that govern what the 'this keyword' is bound to and describe each?
 
       //Answer
+      // By default, this refers to the global object.
+//1- When a function is called as a property on a parent object,
+// this refers to the parent object inside that function.
+//2 - When a function is called with the new operator, this refers to the newly created
+//object inside that function.
+//3 - When a function is called using call or apply, this refers to the first argument
+//passed to call or apply.
+//4- If the first argument is null or not an object, this refers to the global object.
 
   // 3) What is the difference between call and apply?
 
       //Answer
-
+// The difference is that apply lets you invoke the function with arguments as an array;
+//call requires the parameters be listed explicitly.
+//A useful mnemonic is "A for array and C for comma."
   // 4) What does .bind do?
 
       //Answer
-
+// We use the Bind () method primarily to call a function with the this value set explicitly.
+//In other words, bind () allows us to easily set which specific object will
+// be bound to this when a function or method is invoked.
 
 //Next Problem
 
@@ -24,7 +39,13 @@
   //getUsername --> which is a function that returns the current object's username property. *Don't use 'user' instead use the 'this' keyword*
 
     //Code Here
-
+var user ={
+  username: 'Gunnar',
+  email: 'baDuh@hello.com',
+  getUsername: function (){
+    return this.username;
+  }
+};
 //Now, invoke the getUsername method and verify you got the username of the object and not anything else.
 
 
@@ -34,6 +55,16 @@
 // Write the function definitions which will make the following function invocations function properly.
 
   //Function Invocations Here
+
+  function Car(make, model, year){
+    this.make = make;
+    this.model = model;
+    this.year = year;
+    this.move = 0;
+    this.moveCar = function(){
+    return this.year += 10;
+  };
+}
 
 var prius = new Car('Toyota', 'Prius', 2011);
 var mustang = new Car('Ford', 'Mustang', 2013);
@@ -56,6 +87,9 @@ var getYear = function(){
 //Note(no tests)
   //Code Here
 
+  var pruisYear = getYear.call(prius);
+  var mustangYear = getYear.call(mustang);
+
 
 //New Problem
 
@@ -69,7 +103,7 @@ var getMyUsername = function() {
  return this.username;
 };
 
-var userName = getMyUsername(); //Fix this
+var userName = getMyUsername.call(myUser); //Fix this
 
 //Above you're given an object, and  a function. What will the getUsername function return?
 //Note(no tests)
